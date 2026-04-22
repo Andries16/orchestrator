@@ -1,0 +1,6 @@
+{
+  "name": "orchestrator",
+  "description": "Aplicație Web de Gestiune și Orchestrare a Agenților AI folosind tRPC, React, MUI și MongoDB.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

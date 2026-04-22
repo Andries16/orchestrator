@@ -1,0 +1,53 @@
+import { z } from 'zod';
+import { router, publicProcedure } from '../trpc.js';
+import { AgentModel } from '../models/Agent.js';
+import { AgentSchema } from '@cross_brand/shared';
+
+export const agentRouter = router({
+  // Obține toți agenții
+  getAll: publicProcedure.query(async () => {
+    return await AgentModel.find().sort({ createdAt: -1 });
+  }),
+
+  // Obține un agent după ID
+  getById: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      const agent = await AgentModel.findById(input);
+      if (!agent) throw new Error('Agentul nu a fost găsit');
+      return agent;
+    }),
+
+  // Creează un agent nou
+  create: publicProcedure
+    .input(AgentSchema)
+    .mutation(async ({ input }) => {
+      const newAgent = new AgentModel(input);
+      return await newAgent.save();
+    }),
+
+  // Actualizează un agent existent
+  update: publicProcedure
+    .input(z.object({
+      id: z.string(),
+      data: AgentSchema.partial()
+    }))
+    .mutation(async ({ input }) => {
+      const updatedAgent = await AgentModel.findByIdAndUpdate(
+        input.id,
+        { $set: input.data },
+        { new: true }
+      );
+      if (!updatedAgent) throw new Error('Agentul nu a fost găsit pentru actualizare');
+      return updatedAgent;
+    }),
+
+  // Șterge un agent
+  delete: publicProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      const deletedAgent = await AgentModel.findByIdAndDelete(input);
+      if (!deletedAgent) throw new Error('Agentul nu a fost găsit pentru ștergere');
+      return { success: true, id: input };
+    }),
+});

@@ -1,0 +1,22 @@
+{
+  "name": "@cross_brand/backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "node src/index.ts"
+  },
+  "dependencies": {
+    "@cross_brand/shared": "*",
+    "@trpc/server": "^11.13.0",
+    "express": "^4.21.2",
+    "mongoose": "^8.0.0",
+    "zod": "^3.23.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0"
+  }
+}
