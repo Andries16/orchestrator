@@ -3,7 +3,7 @@ import { ExecutionLogModel } from "../models/ExecutionLog.js";
 import { WorkflowModel } from "../models/Workflow.js";
 import { WorkflowRunModel } from "../models/WorkflowRun.js";
 import { llmService } from "./LLMService.js";
-function topologicalSort(
+export function topologicalSort(
   nodeIds: string[],
   edges: { source: string; target: string }[],
 ): string[] {
