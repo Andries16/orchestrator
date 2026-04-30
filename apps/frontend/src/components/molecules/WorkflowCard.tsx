@@ -1,22 +1,20 @@
-import { useState } from "react";
-import {
-  Box,
-  Typography,
-  Paper,
-  IconButton,
-  Button,
-  Menu,
-  MenuItem,
-} from "@mui/material";
 import { Workflow } from "@cross_brand/shared";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import {
-  Play,
+  Copy,
+  Download,
   Layers,
   MoreVertical,
+  Play,
   Trash2,
-  Download,
-  Copy,
 } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { trpc } from "../../utils/trpc";
 interface WorkflowCardProps {

@@ -1,5 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
 import { Agent } from "@cross_brand/shared";
+import mongoose, { Document, Schema } from "mongoose";
 export interface IAgent extends Agent, Omit<Document, "model"> {}
 const AgentSchema: Schema = new Schema(
   {

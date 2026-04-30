@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc.js";
 import { PromptTemplateModel } from "../models/PromptTemplate.js";
+import { publicProcedure, router } from "../trpc.js";
 const TemplateInput = z.object({
   title: z.string().min(2),
   content: z.string().min(1),

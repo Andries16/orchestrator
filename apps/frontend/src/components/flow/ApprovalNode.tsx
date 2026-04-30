@@ -1,7 +1,7 @@
+import { Box, Paper, Typography } from "@mui/material";
+import { UserCheck } from "lucide-react";
 import { memo } from "react";
 import { Handle, Position } from "reactflow";
-import { Box, Typography, Paper } from "@mui/material";
-import { UserCheck } from "lucide-react";
 export const ApprovalNode = memo(({ data }: any) => {
   return (
     <Paper

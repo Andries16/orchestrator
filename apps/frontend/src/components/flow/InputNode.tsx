@@ -1,6 +1,6 @@
-import { memo } from "react";
-import { Handle, Position, NodeProps } from "reactflow";
 import { PlayCircle } from "lucide-react";
+import { memo } from "react";
+import { Handle, NodeProps, Position } from "reactflow";
 export const InputNode = memo(({ selected }: NodeProps) => {
   return (
     <div

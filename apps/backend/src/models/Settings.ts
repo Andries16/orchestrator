@@ -1,5 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
 import { Settings } from "@cross_brand/shared";
+import mongoose, { Document, Schema } from "mongoose";
 export interface ISettings extends Settings, Document {}
 const SettingsSchema: Schema = new Schema(
   {

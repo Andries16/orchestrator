@@ -1,4 +1,4 @@
-import { Chip } from "@mui/material";
+import Chip from '@mui/material/Chip';
 export type StatusType = "success" | "error" | "processing";
 interface StatusBadgeProps {
   status: StatusType;

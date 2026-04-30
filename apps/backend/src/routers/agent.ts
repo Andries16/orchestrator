@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { router, publicProcedure } from "../trpc.js";
-import { AgentModel } from "../models/Agent.js";
 import { AgentSchema } from "@cross_brand/shared";
+import { z } from "zod";
+import { AgentModel } from "../models/Agent.js";
+import { publicProcedure, router } from "../trpc.js";
 export const agentRouter = router({
   getAll: publicProcedure.query(async () => {
     return await AgentModel.find().sort({ createdAt: -1 });

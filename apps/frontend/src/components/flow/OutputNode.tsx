@@ -1,6 +1,6 @@
-import { memo } from "react";
-import { Handle, Position, NodeProps } from "reactflow";
 import { CheckCircle2 } from "lucide-react";
+import { memo } from "react";
+import { Handle, NodeProps, Position } from "reactflow";
 export const OutputNode = memo(({ selected }: NodeProps) => {
   return (
     <div

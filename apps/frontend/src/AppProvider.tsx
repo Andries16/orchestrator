@@ -1,8 +1,9 @@
+import { createTheme, ThemeProvider } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import React, { useState } from "react";
 import { trpc } from "./utils/trpc";
-import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",

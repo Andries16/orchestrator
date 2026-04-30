@@ -1,29 +1,27 @@
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import {
-  Box,
-  Typography,
-  Container,
-  AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Divider,
-} from "@mui/material";
-import { AgentsList } from "../organisms/AgentsList";
-import { WorkflowsList } from "../organisms/WorkflowsList";
-import {
-  Terminal,
-  Plus,
-  Settings,
   Activity,
   BarChart2,
   FileText,
+  Plus,
+  Settings,
+  Terminal,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AgentsList } from "../organisms/AgentsList";
+import { WorkflowsList } from "../organisms/WorkflowsList";
 export const AgentsPage = () => {
   const navigate = useNavigate();
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#0a0a0a" }}>
-      {}
+      { }
       <AppBar
         position="sticky"
         elevation={0}
@@ -146,7 +144,7 @@ export const AgentsPage = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      {}
+      { }
       <Box
         sx={{
           py: 6,
@@ -176,7 +174,7 @@ export const AgentsPage = () => {
           </Box>
         </Container>
       </Box>
-      {}
+      { }
       <Container maxWidth="xl" sx={{ py: 6 }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <WorkflowsList />
@@ -184,7 +182,7 @@ export const AgentsPage = () => {
           <AgentsList />
         </Box>
       </Container>
-      {}
+      { }
       <Box
         sx={{
           mt: "auto",

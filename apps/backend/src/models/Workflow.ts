@@ -1,5 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
 import { Workflow } from "@cross_brand/shared";
+import mongoose, { Document, Schema } from "mongoose";
 export interface IWorkflow extends Workflow, Document {}
 const WorkflowSchema: Schema = new Schema(
   {

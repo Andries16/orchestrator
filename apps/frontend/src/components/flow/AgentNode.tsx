@@ -1,6 +1,6 @@
+import { Bot, Calculator, Clock, Cpu, Search, Wrench } from "lucide-react";
 import { memo } from "react";
-import { Handle, Position, NodeProps } from "reactflow";
-import { Bot, Cpu, Wrench, Clock, Calculator, Search } from "lucide-react";
+import { Handle, NodeProps, Position } from "reactflow";
 export interface AgentNodeData {
   label: string;
   agentName?: string;
@@ -46,7 +46,7 @@ export const AgentNode = memo(
           transition: "box-shadow 0.3s ease, border-color 0.3s ease",
         }}
       >
-        {}
+        { }
         <div
           style={{
             padding: "10px 14px 8px",
@@ -89,7 +89,7 @@ export const AgentNode = memo(
             )}
           </div>
         </div>
-        {}
+        { }
         <div
           style={{
             padding: "8px 14px 10px",
@@ -143,7 +143,7 @@ export const AgentNode = memo(
             </span>
           )}
         </div>
-        {}
+        { }
         {(data.tools?.length || selected) && (
           <div
             style={{

@@ -1,28 +1,26 @@
-import {
-  Box,
-  Typography,
-  Container,
-  Paper,
-  IconButton,
-  Chip,
-  Divider,
-  CircularProgress,
-} from "@mui/material";
-import {
-  ArrowLeft,
-  Clock,
-  Activity,
-  CheckCircle,
-  AlertCircle,
-} from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
-import { trpc } from "../../utils/trpc";
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { format } from "date-fns";
-import { LogItem } from "../molecules/LogItem";
+import {
+  Activity,
+  AlertCircle,
+  ArrowLeft,
+  CheckCircle,
+  Clock,
+} from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { useNavigate, useParams } from "react-router-dom";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
+import { trpc } from "../../utils/trpc";
+import { LogItem } from "../molecules/LogItem";
 export const RunDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();

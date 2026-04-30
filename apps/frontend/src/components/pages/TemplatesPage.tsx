@@ -1,34 +1,30 @@
-import { useState } from "react";
-import {
-  Box,
-  Typography,
-  Container,
-  Paper,
-  IconButton,
-  Button,
-  TextField,
-  Chip,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  CircularProgress,
-  Snackbar,
-  Alert,
-  InputAdornment,
-} from "@mui/material";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import {
   ArrowLeft,
-  Plus,
-  Trash2,
+  Check,
+  Copy,
   Edit2,
   FileText,
-  Tag,
+  Plus,
   Save,
+  Tag,
+  Trash2,
   X,
-  Copy,
-  Check,
 } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { trpc } from "../../utils/trpc";
 const VARIABLE_REGEX = /\{\{(\w+)\}\}/g;
@@ -112,7 +108,7 @@ export const TemplatesPage = () => {
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#0a0a0a", py: 6 }}>
       <Container maxWidth="lg">
-        {}
+        { }
         <Box
           sx={{
             mb: 6,
@@ -316,7 +312,7 @@ export const TemplatesPage = () => {
           </Box>
         )}
       </Container>
-      {}
+      { }
       <Dialog
         open={editOpen}
         onClose={closeDialog}
@@ -377,8 +373,8 @@ export const TemplatesPage = () => {
             helperText={
               extractVariables(content).length > 0
                 ? `Variables: ${extractVariables(content)
-                    .map((v) => `{{${v}}}`)
-                    .join(", ")}`
+                  .map((v) => `{{${v}}}`)
+                  .join(", ")}`
                 : "Add {{variable}} placeholders for dynamic injection"
             }
             sx={{

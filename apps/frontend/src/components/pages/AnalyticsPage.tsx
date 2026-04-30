@@ -1,36 +1,34 @@
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import {
-  Box,
-  Typography,
-  Container,
-  Paper,
-  CircularProgress,
-  Grid,
-} from "@mui/material";
-import { IconButton } from "@mui/material";
-import {
-  ArrowLeft,
-  TrendingUp,
-  CheckCircle,
   AlertCircle,
-  Zap,
-  Clock,
+  ArrowLeft,
   Bot,
+  CheckCircle,
+  Clock,
+  TrendingUp,
   Workflow,
+  Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { trpc } from "../../utils/trpc";
 import {
-  LineChart,
-  Line,
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
 } from "recharts";
+import { trpc } from "../../utils/trpc";
 const KpiCard = ({
   icon,
   label,
@@ -130,7 +128,7 @@ export const AnalyticsPage = () => {
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#0a0a0a", py: 6 }}>
       <Container maxWidth="xl">
-        {}
+        { }
         <Box sx={{ mb: 6, display: "flex", alignItems: "center", gap: 2 }}>
           <IconButton
             onClick={() => navigate("/")}
@@ -173,7 +171,7 @@ export const AnalyticsPage = () => {
           </Box>
         ) : (
           <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            {}
+            { }
             <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
               <KpiCard
                 icon={<TrendingUp size={16} color="#6366f1" />}
@@ -208,7 +206,7 @@ export const AnalyticsPage = () => {
                 color="#22d3ee"
               />
             </Box>
-            {}
+            { }
             <Paper
               elevation={0}
               sx={{
@@ -280,7 +278,7 @@ export const AnalyticsPage = () => {
               )}
             </Paper>
             <Grid container spacing={3}>
-              {}
+              { }
               <Grid item xs={12} md={6}>
                 <Paper
                   elevation={0}
@@ -361,7 +359,7 @@ export const AnalyticsPage = () => {
                   )}
                 </Paper>
               </Grid>
-              {}
+              { }
               <Grid item xs={12} md={6}>
                 <Paper
                   elevation={0}
@@ -443,7 +441,7 @@ export const AnalyticsPage = () => {
                 </Paper>
               </Grid>
             </Grid>
-            {}
+            { }
             <Paper
               elevation={0}
               sx={{

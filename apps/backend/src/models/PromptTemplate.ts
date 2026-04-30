@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 export interface IPromptTemplate extends Document {
   title: string;
   content: string;

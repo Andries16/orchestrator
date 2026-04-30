@@ -1,22 +1,20 @@
-import { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  Container,
-  TextField,
-  Button,
-  Paper,
-  IconButton,
-  Grid,
-  Snackbar,
-  Divider,
-} from "@mui/material";
-import { trpc } from "../../utils/trpc";
-import { Save, ArrowLeft, Key, Shield } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Settings, SettingsSchema } from "@cross_brand/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SettingsSchema, Settings } from "@cross_brand/shared";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { ArrowLeft, Key, Save, Shield } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { trpc } from "../../utils/trpc";
 export const SettingsPage = () => {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);

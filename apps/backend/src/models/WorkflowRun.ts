@@ -1,5 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
 import { WorkflowRun } from "@cross_brand/shared";
+import mongoose, { Document, Schema } from "mongoose";
 export interface IWorkflowRun extends Omit<WorkflowRun, "startTime">, Document {
   startTime: Date;
   state: Record<string, any>;

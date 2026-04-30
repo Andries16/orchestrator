@@ -1,43 +1,41 @@
-import { useState, useRef, useEffect } from "react";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import {
-  Box,
-  Typography,
-  Container,
-  TextField,
-  Button,
-  Paper,
-  Divider,
-  CircularProgress,
-  Alert,
-  IconButton,
-  Breadcrumbs,
-  Link,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  List,
-  ListItemButton,
-  ListItemText,
-  Chip,
-} from "@mui/material";
-import { trpc } from "../../utils/trpc";
-import { LogItem } from "../molecules/LogItem";
-import {
+  ChevronRight,
+  Cpu,
+  FileText,
+  History,
+  Key,
   Play,
   Send,
-  ChevronRight,
-  History,
   Terminal,
-  FileText,
-  X,
   UserCheck,
-  Cpu,
-  Key,
+  X,
 } from "lucide-react";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
+import { trpc } from "../../utils/trpc";
+import { LogItem } from "../molecules/LogItem";
 export const WorkflowExecutionPage = ({
   workflowId,
 }: {
@@ -342,7 +340,7 @@ export const WorkflowExecutionPage = ({
                   },
                 }}
               />
-              {}
+              { }
               <Box sx={{ mt: 3 }}>
                 <Button
                   size="small"
@@ -432,7 +430,7 @@ export const WorkflowExecutionPage = ({
                   </Box>
                 )}
               </Box>
-              {}
+              { }
               {isWaiting && (
                 <Paper
                   elevation={0}
@@ -578,7 +576,7 @@ export const WorkflowExecutionPage = ({
                 </Typography>
               </Box>
             </Paper>
-            {}
+            { }
             {Object.keys(workflowMemory).length > 0 && (
               <Paper
                 elevation={0}
@@ -730,7 +728,7 @@ export const WorkflowExecutionPage = ({
                 <LogItem key={index} log={log} />
               ))}
             </Box>
-            {}
+            { }
             {Object.values(activeSteps).map((step, idx) => (
               <Box
                 key={idx}
@@ -781,7 +779,7 @@ export const WorkflowExecutionPage = ({
                 )}
               </Box>
             ))}
-            {}
+            { }
             {finalResult && (
               <Box sx={{ animation: "fadeIn 0.5s ease-out", mt: 4 }}>
                 <Box
@@ -887,7 +885,7 @@ export const WorkflowExecutionPage = ({
       `,
         }}
       />
-      {}
+      { }
       <Dialog
         open={templatePickerOpen}
         onClose={() => setTemplatePickerOpen(false)}

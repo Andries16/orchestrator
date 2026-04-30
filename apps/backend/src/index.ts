@@ -1,8 +1,8 @@
+import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
 import rateLimit from "express-rate-limit";
-import { createServer as createViteServer } from "vite";
 import path from "path";
-import * as trpcExpress from "@trpc/server/adapters/express";
+import { createServer as createViteServer } from "vite";
 import { connectDB } from "./db.js";
 import { appRouter } from "./routers/index.js";
 async function startServer() {

@@ -1,24 +1,21 @@
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { format } from "date-fns";
 import {
-  Box,
-  Typography,
-  Container,
-  Paper,
-  IconButton,
-  Chip,
-  Grid,
-} from "@mui/material";
-import {
-  ArrowLeft,
-  Clock,
-  AlertCircle,
-  CheckCircle,
-  Play,
-  ChevronRight,
   Activity,
+  AlertCircle,
+  ArrowLeft,
+  CheckCircle,
+  ChevronRight,
+  Clock
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { trpc } from "../../utils/trpc";
-import { format } from "date-fns";
 export const HistoryPage = () => {
   const navigate = useNavigate();
   const { data: runs, isLoading } = trpc.workflow.getRuns.useQuery();
@@ -155,9 +152,9 @@ export const HistoryPage = () => {
                             >
                               {run.startTime
                                 ? format(
-                                    new Date(run.startTime),
-                                    "dd MMM yyyy, HH:mm:ss",
-                                  )
+                                  new Date(run.startTime),
+                                  "dd MMM yyyy, HH:mm:ss",
+                                )
                                 : "N/A"}
                             </Typography>
                           </Box>

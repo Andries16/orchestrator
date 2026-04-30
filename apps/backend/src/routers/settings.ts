@@ -1,8 +1,7 @@
-import { z } from "zod";
-import { router, publicProcedure } from "../trpc.js";
-import { SettingsModel } from "../models/Settings.js";
 import { SettingsSchema } from "@cross_brand/shared";
-import { encrypt, decrypt } from "../utils/crypto.js";
+import { SettingsModel } from "../models/Settings.js";
+import { publicProcedure, router } from "../trpc.js";
+import { decrypt, encrypt } from "../utils/crypto.js";
 export const settingsRouter = router({
   get: publicProcedure.query(async () => {
     let settings = await SettingsModel.findOne();

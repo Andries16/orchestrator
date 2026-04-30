@@ -1,11 +1,13 @@
-import { Box, Typography, Paper } from "@mui/material";
 import { ExecutionLog } from "@cross_brand/shared";
-import { StatusBadge } from "../atoms/StatusBadge";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import { ArrowRight, CornerDownRight } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
+import { StatusBadge } from "../atoms/StatusBadge";
 interface LogItemProps {
   log: ExecutionLog;
 }
@@ -25,7 +27,7 @@ export const LogItem = ({ log }: LogItemProps) => {
           {(log as any).iteration && `(Iter #${(log as any).iteration})`}
         </Typography>
       </Box>
-      {}
+      { }
       <Paper
         elevation={0}
         sx={{
@@ -55,7 +57,7 @@ export const LogItem = ({ log }: LogItemProps) => {
           {log.input}
         </Typography>
       </Paper>
-      {}
+      { }
       <Paper
         elevation={0}
         sx={{

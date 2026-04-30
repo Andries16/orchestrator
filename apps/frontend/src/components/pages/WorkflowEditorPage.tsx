@@ -1,52 +1,47 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import CircularProgress from '@mui/material/CircularProgress';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import {
+  ArrowLeft,
+  Bot,
+  GripVertical,
+  Save,
+  Settings,
+  UserCheck,
+  Workflow
+} from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactFlow, {
-  ReactFlowProvider,
-  addEdge,
-  useNodesState,
-  useEdgesState,
-  Controls,
-  MiniMap,
   Background,
   BackgroundVariant,
   Connection,
+  Controls,
   Edge,
-  Node,
-  ReactFlowInstance,
   MarkerType,
+  MiniMap,
+  Node,
   Panel,
+  ReactFlowInstance,
+  ReactFlowProvider,
+  addEdge,
+  useEdgesState,
+  useNodesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import "./flow/FlowStyles.css";
-import {
-  Box,
-  Typography,
-  Button,
-  TextField,
-  Paper,
-  IconButton,
-  Chip,
-  Divider,
-  Snackbar,
-  CircularProgress,
-  Tooltip,
-} from "@mui/material";
-import {
-  Save,
-  ArrowLeft,
-  Plus,
-  Trash2,
-  Bot,
-  GripVertical,
-  Workflow,
-  UserCheck,
-  Settings,
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { trpc } from "../../utils/trpc";
 import { AgentNode } from "../flow/AgentNode";
+import { ApprovalNode } from "../flow/ApprovalNode";
+import "../flow/FlowStyles.css";
 import { InputNode } from "../flow/InputNode";
 import { OutputNode } from "../flow/OutputNode";
-import { ApprovalNode } from "../flow/ApprovalNode";
 const nodeTypes = {
   agentNode: AgentNode,
   inputNode: InputNode,
@@ -271,7 +266,7 @@ function WorkflowEditorCanvas() {
         overflow: "hidden",
       }}
     >
-      {}
+      { }
       <Box
         sx={{
           height: 60,
@@ -409,9 +404,9 @@ function WorkflowEditorCanvas() {
           </Tooltip>
         </Box>
       </Box>
-      {}
+      { }
       <Box sx={{ flex: 1, display: "flex", overflow: "hidden" }}>
-        {}
+        { }
         <Box
           sx={{
             width: 220,
@@ -604,7 +599,7 @@ function WorkflowEditorCanvas() {
               </Box>
             ))}
           </Box>
-          {}
+          { }
           <Box sx={{ p: 1.5, borderTop: "1px solid #1a1a1a" }}>
             <Typography
               sx={{ fontSize: "10px", color: "#1e293b", textAlign: "center" }}
@@ -613,7 +608,7 @@ function WorkflowEditorCanvas() {
             </Typography>
           </Box>
         </Box>
-        {}
+        { }
         <Box ref={reactFlowWrapper} sx={{ flex: 1, position: "relative" }}>
           <ReactFlow
             nodes={nodes}

@@ -1,5 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
 import { ExecutionLog } from "@cross_brand/shared";
+import mongoose, { Document, Schema } from "mongoose";
 export interface IExecutionLog
   extends Omit<ExecutionLog, "timestamp">, Document {
   nodeId?: string;

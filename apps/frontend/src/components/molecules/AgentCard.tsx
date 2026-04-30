@@ -1,14 +1,12 @@
-import { useState } from "react";
-import {
-  Box,
-  Typography,
-  Paper,
-  IconButton,
-  Menu,
-  MenuItem,
-} from "@mui/material";
 import { Agent } from "@cross_brand/shared";
-import { Cpu, Terminal, MoreVertical, Trash2 } from "lucide-react";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { Cpu, MoreVertical, Terminal, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { trpc } from "../../utils/trpc";
 interface AgentCardProps {
   agent: Agent & { _id: string };

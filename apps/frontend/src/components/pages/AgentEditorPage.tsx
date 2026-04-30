@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
+import { Agent, AgentSchema } from "@cross_brand/shared";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
-  Typography,
-  Container,
-  TextField,
   Button,
-  Paper,
-  IconButton,
-  Grid,
-  Slider,
-  MenuItem,
-  Select,
+  Container,
   FormControl,
-  InputLabel,
-  Snackbar,
   FormHelperText,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Slider,
+  Snackbar,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { trpc } from "../../utils/trpc";
-import { Save, ArrowLeft, Bot } from "lucide-react";
+import { ArrowLeft, Bot } from "lucide-react";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AgentSchema, Agent } from "@cross_brand/shared";
+import { trpc } from "../../utils/trpc";
 export const AgentEditorPage = () => {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
@@ -249,7 +249,7 @@ export const AgentEditorPage = () => {
                   </FormHelperText>
                 </FormControl>
               </Grid>
-              {}
+              { }
               <Grid item xs={12} sm={6}>
                 <Controller
                   name="maxRetries"
@@ -275,7 +275,7 @@ export const AgentEditorPage = () => {
                   )}
                 />
               </Grid>
-              {}
+              { }
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
                   <InputLabel sx={{ color: "#888" }}>

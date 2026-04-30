@@ -1,14 +1,14 @@
-import { GlobalStyles } from "@mui/material";
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
-import { AgentsPage } from "./components/pages/AgentsPage";
-import { WorkflowEditorPage } from "./components/pages/WorkflowEditorPage";
+import GlobalStyles from '@mui/material/GlobalStyles';
+import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import { AgentEditorPage } from "./components/pages/AgentEditorPage";
-import { WorkflowExecutionPage } from "./components/pages/WorkflowExecutionPage";
-import { SettingsPage } from "./components/pages/SettingsPage";
+import { AgentsPage } from "./components/pages/AgentsPage";
+import { AnalyticsPage } from "./components/pages/AnalyticsPage";
 import { HistoryPage } from "./components/pages/HistoryPage";
 import { RunDetailsPage } from "./components/pages/RunDetailsPage";
-import { AnalyticsPage } from "./components/pages/AnalyticsPage";
+import { SettingsPage } from "./components/pages/SettingsPage";
 import { TemplatesPage } from "./components/pages/TemplatesPage";
+import { WorkflowEditorPage } from "./components/pages/WorkflowEditorPage";
+import { WorkflowExecutionPage } from "./components/pages/WorkflowExecutionPage";
 const ExecutionWrapper = () => {
   const { id } = useParams();
   return <WorkflowExecutionPage workflowId={id!} />;
