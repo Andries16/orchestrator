@@ -1,0 +1,99 @@
+
+.react-flow__renderer {
+  background: #0a0a0a;
+}
+
+.react-flow__background {
+  background: #0a0a0a;
+}
+
+.react-flow__edge-path {
+  stroke: #334155;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #6366f1;
+  stroke-width: 2.5;
+}
+
+.react-flow__edge-text {
+  fill: #818cf8;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+}
+
+.react-flow__edge-textbg {
+  fill: #1e1e1e;
+  rx: 6;
+  ry: 6;
+}
+
+.react-flow__arrowhead path {
+  fill: #334155;
+}
+
+.react-flow__edge.selected .react-flow__arrowhead path,
+.react-flow__edge:hover .react-flow__arrowhead path {
+  fill: #6366f1;
+}
+
+.react-flow__connection-path {
+  stroke: #6366f1;
+  stroke-width: 2;
+}
+
+.react-flow__controls {
+  background: #121212;
+  border: 1px solid #242424;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.react-flow__controls-button {
+  background: #121212;
+  border-bottom: 1px solid #242424;
+  color: #888;
+  fill: #888;
+}
+
+.react-flow__controls-button:hover {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  fill: #e0e0e0;
+}
+
+.react-flow__controls-button svg {
+  fill: inherit;
+}
+
+.react-flow__minimap {
+  background: #121212;
+  border: 1px solid #242424;
+  border-radius: 10px;
+}
+
+.react-flow__minimap-mask {
+  fill: rgba(255,255,255,0.04);
+}
+
+.react-flow__minimap-node {
+  fill: #334155;
+}
+
+.react-flow__panel {
+  color: #888;
+}
+
+
+.react-flow__edge-path.animated {
+  stroke-dasharray: 5;
+  animation: dash 1s linear infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -10; }
+}

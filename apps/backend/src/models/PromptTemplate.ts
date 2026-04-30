@@ -1,17 +1,19 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import { PromptTemplate } from '@cross_brand/shared';
-
-/**
- * Interfața pentru documentul PromptTemplate în MongoDB.
- */
-export interface IPromptTemplate extends PromptTemplate, Document {}
-
-/**
- * Schema Mongoose pentru Șablon de Prompt.
- */
-const PromptTemplateSchema: Schema = new Schema({
-  title: { type: String, required: true },
-  content: { type: String, required: true }
-}, { timestamps: true });
-
-export const PromptTemplateModel = mongoose.model<IPromptTemplate>('PromptTemplate', PromptTemplateSchema);
+import mongoose, { Schema, Document } from "mongoose";
+export interface IPromptTemplate extends Document {
+  title: string;
+  content: string;
+  tags: string[];
+  createdAt: Date;
+}
+const PromptTemplateSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    tags: { type: [String], default: [] },
+  },
+  { timestamps: true },
+);
+export const PromptTemplateModel = mongoose.model<IPromptTemplate>(
+  "PromptTemplate",
+  PromptTemplateSchema,
+);
