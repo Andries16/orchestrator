@@ -1,9 +1,6 @@
-import { z } from "zod";
-import { router, publicProcedure } from "../trpc.js";
-import { WorkflowRunModel } from "../models/WorkflowRun.js";
 import { ExecutionLogModel } from "../models/ExecutionLog.js";
-import { WorkflowModel } from "../models/Workflow.js";
-import { AgentModel } from "../models/Agent.js";
+import { WorkflowRunModel } from "../models/WorkflowRun.js";
+import { publicProcedure, router } from "../trpc.js";
 export const analyticsRouter = router({
   getSummary: publicProcedure.query(async () => {
     const [runs, logs] = await Promise.all([
