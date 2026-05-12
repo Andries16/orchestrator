@@ -24,6 +24,12 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       links: [
         httpBatchLink({
           url: "/api/trpc",
+          headers: () => {
+            const token = localStorage.getItem("token");
+            return {
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            };
+          },
         }),
       ],
     }),

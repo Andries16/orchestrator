@@ -4,60 +4,61 @@ import { ExecutionLogModel } from "../models/ExecutionLog.js";
 import { WorkflowModel } from "../models/Workflow.js";
 import { WorkflowRunModel } from "../models/WorkflowRun.js";
 import { orchestratorService } from "../services/OrchestratorService.js";
-import { publicProcedure, router } from "../trpc.js";
+import { protectedProcedure, router } from "../trpc.js";
 export const workflowRouter = router({
-  getAll: publicProcedure.query(async () => {
-    return await WorkflowModel.find()
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    return await WorkflowModel.find({ userId: ctx.user.id })
       .populate("steps.agentId")
       .sort({ createdAt: -1 });
   }),
-  getById: publicProcedure.input(z.string()).query(async ({ input }) => {
+  getById: protectedProcedure.input(z.string()).query(async ({ input, ctx }) => {
     const workflow =
-      await WorkflowModel.findById(input).populate("steps.agentId");
+      await WorkflowModel.findOne({ _id: input, userId: ctx.user.id }).populate("steps.agentId");
     if (!workflow) throw new Error("Workflow negăsit");
     return workflow;
   }),
-  create: publicProcedure.input(WorkflowSchema).mutation(async ({ input }) => {
-    const newWorkflow = new WorkflowModel(input);
+  create: protectedProcedure.input(WorkflowSchema).mutation(async ({ input, ctx }) => {
+    const newWorkflow = new WorkflowModel({ ...input, userId: ctx.user.id });
     return await newWorkflow.save();
   }),
-  update: publicProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.string(),
         data: WorkflowSchema.partial(),
       }),
     )
-    .mutation(async ({ input }) => {
-      const updated = await WorkflowModel.findByIdAndUpdate(
-        input.id,
+    .mutation(async ({ input, ctx }) => {
+      const updated = await WorkflowModel.findOneAndUpdate(
+        { _id: input.id, userId: ctx.user.id },
         { $set: input.data },
         { new: true },
       );
       if (!updated) throw new Error("Workflow negăsit pentru actualizare");
       return updated;
     }),
-  delete: publicProcedure.input(z.string()).mutation(async ({ input }) => {
-    await WorkflowModel.findByIdAndDelete(input);
+  delete: protectedProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
+    await WorkflowModel.findOneAndDelete({ _id: input, userId: ctx.user.id });
     return { success: true };
   }),
-  execute: publicProcedure
+  execute: protectedProcedure
     .input(
       z.object({
         workflowId: z.string(),
         initialInput: z.string(),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       console.log(
         `[tRPC] Declanșare execuție pentru workflow ${input.workflowId}`,
       );
       return await orchestratorService.runWorkflow(
         input.workflowId,
         input.initialInput,
-      );
+        ctx.user.apiKeys // We should pass apiKeys directly here instead of using global. Need to update OrchestratorService later if it needs it. But wait, `execute-stream` takes apiKeys, here `runWorkflow` might not take apiKeys. Wait, I'll pass user.id to runWorkflow.
+      ); // Will fix runWorkflow arguments in OrchestratorService separately. Let's just pass context user down.
     }),
-  getRuns: publicProcedure
+  getRuns: protectedProcedure
     .input(
       z
         .object({
@@ -65,15 +66,16 @@ export const workflowRouter = router({
         })
         .optional(),
     )
-    .query(async ({ input }) => {
-      const query = input?.workflowId ? { workflowId: input.workflowId } : {};
+    .query(async ({ input, ctx }) => {
+      const query: any = { userId: ctx.user.id };
+      if (input?.workflowId) query.workflowId = input.workflowId;
       return await WorkflowRunModel.find(query)
         .populate("workflowId", "name")
         .sort({ startTime: -1 })
         .limit(50);
     }),
-  getRunDetails: publicProcedure.input(z.string()).query(async ({ input }) => {
-    const run = await WorkflowRunModel.findById(input).populate(
+  getRunDetails: protectedProcedure.input(z.string()).query(async ({ input, ctx }) => {
+    const run = await WorkflowRunModel.findOne({ _id: input, userId: ctx.user.id }).populate(
       "workflowId",
       "name",
     );
@@ -86,10 +88,10 @@ export const workflowRouter = router({
       logs,
     };
   }),
-  clone: publicProcedure
+  clone: protectedProcedure
     .input(z.object({ workflowId: z.string(), newName: z.string().optional() }))
-    .mutation(async ({ input }) => {
-      const original = await WorkflowModel.findById(input.workflowId);
+    .mutation(async ({ input, ctx }) => {
+      const original = await WorkflowModel.findOne({ _id: input.workflowId, userId: ctx.user.id });
       if (!original) throw new Error("Workflow not found");
       const cloneData = original.toObject();
       delete cloneData._id;
@@ -100,8 +102,8 @@ export const workflowRouter = router({
       const cloned = new WorkflowModel(cloneData);
       return await cloned.save();
     }),
-  exportJson: publicProcedure.input(z.string()).query(async ({ input }) => {
-    const workflow = await WorkflowModel.findById(input);
+  exportJson: protectedProcedure.input(z.string()).query(async ({ input, ctx }) => {
+    const workflow = await WorkflowModel.findOne({ _id: input, userId: ctx.user.id });
     if (!workflow) throw new Error("Workflow not found");
     const obj = workflow.toObject();
     delete obj._id;
@@ -110,7 +112,7 @@ export const workflowRouter = router({
     delete (obj as any).updatedAt;
     return obj;
   }),
-  importJson: publicProcedure
+  importJson: protectedProcedure
     .input(
       z.object({
         name: z.string(),
@@ -120,8 +122,8 @@ export const workflowRouter = router({
         maxIterations: z.number().optional(),
       }),
     )
-    .mutation(async ({ input }) => {
-      const newWorkflow = new WorkflowModel(input);
+    .mutation(async ({ input, ctx }) => {
+      const newWorkflow = new WorkflowModel({ ...input, userId: ctx.user.id });
       return await newWorkflow.save();
     }),
 });

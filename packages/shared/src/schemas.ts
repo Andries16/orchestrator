@@ -86,3 +86,22 @@ export const SettingsSchema = z.object({
   googleKey: z.string().optional(),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
+
+export const LoginInputSchema = z.object({
+  email: z.string().email("Email invalid"),
+  password: z.string().min(6, "Parola trebuie să aibă cel puțin 6 caractere"),
+});
+export type LoginInput = z.infer<typeof LoginInputSchema>;
+
+export const RegisterInputSchema = z.object({
+  email: z.string().email("Email invalid"),
+  password: z.string().min(6, "Parola trebuie să aibă cel puțin 6 caractere"),
+});
+export type RegisterInput = z.infer<typeof RegisterInputSchema>;
+
+export const UserSchema = z.object({
+  id: z.string(),
+  email: z.string().email(),
+  apiKeys: SettingsSchema.optional(),
+});
+export type User = z.infer<typeof UserSchema>;

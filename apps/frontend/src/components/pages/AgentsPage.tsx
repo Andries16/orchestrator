@@ -13,12 +13,16 @@ import {
   Plus,
   Settings,
   Terminal,
+  LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../utils/authStore";
 import { AgentsList } from "../organisms/AgentsList";
 import { WorkflowsList } from "../organisms/WorkflowsList";
 export const AgentsPage = () => {
   const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+  const user = useAuthStore((state) => state.user);
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#0a0a0a" }}>
       { }
@@ -140,6 +144,21 @@ export const AgentsPage = () => {
               >
                 <Settings size={18} />
               </IconButton>
+              <Box sx={{ display: "flex", alignItems: "center", ml: 2, borderLeft: "1px solid #242424", pl: 2 }}>
+                <Typography sx={{ color: "#888", fontSize: "12px", mr: 2 }}>
+                  {user?.email}
+                </Typography>
+                <IconButton
+                  onClick={() => {
+                    logout();
+                    navigate("/login");
+                  }}
+                  title="Logout"
+                  sx={{ color: "#888", "&:hover": { color: "#ef4444" } }}
+                >
+                  <LogOut size={18} />
+                </IconButton>
+              </Box>
             </Box>
           </Toolbar>
         </Container>

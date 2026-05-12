@@ -1,23 +1,21 @@
 import { SettingsSchema } from "@cross_brand/shared";
-import { SettingsModel } from "../models/Settings.js";
-import { publicProcedure, router } from "../trpc.js";
+import { UserModel } from "../models/User.js";
+import { protectedProcedure, router } from "../trpc.js";
 import { decrypt, encrypt } from "../utils/crypto.js";
+
 export const settingsRouter = router({
-  get: publicProcedure.query(async () => {
-    let settings = await SettingsModel.findOne();
-    if (!settings) {
-      settings = await SettingsModel.create({});
-    }
-    const result = settings.toObject();
+  get: protectedProcedure.query(async ({ ctx }) => {
+    const user = await UserModel.findById(ctx.user.id);
+    const keys = user?.apiKeys || {};
     return {
-      openaiKey: result.openaiKey ? decrypt(result.openaiKey) : "",
-      anthropicKey: result.anthropicKey ? decrypt(result.anthropicKey) : "",
-      googleKey: result.googleKey ? decrypt(result.googleKey) : "",
+      openaiKey: keys.openaiKey ? decrypt(keys.openaiKey) : "",
+      anthropicKey: keys.anthropicKey ? decrypt(keys.anthropicKey) : "",
+      googleKey: keys.googleKey ? decrypt(keys.googleKey) : "",
     };
   }),
-  update: publicProcedure
+  update: protectedProcedure
     .input(SettingsSchema.partial())
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const dataToSave = { ...input };
       if (dataToSave.openaiKey)
         dataToSave.openaiKey = encrypt(dataToSave.openaiKey);
@@ -25,17 +23,13 @@ export const settingsRouter = router({
         dataToSave.anthropicKey = encrypt(dataToSave.anthropicKey);
       if (dataToSave.googleKey)
         dataToSave.googleKey = encrypt(dataToSave.googleKey);
-      let settings = await SettingsModel.findOne();
-      if (!settings) {
-        settings = new SettingsModel(dataToSave);
-        await settings.save();
-        return settings.toObject();
-      }
-      const updated = await SettingsModel.findByIdAndUpdate(
-        settings._id,
-        { $set: dataToSave },
-        { new: true },
+      
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        ctx.user.id,
+        { $set: { apiKeys: dataToSave } },
+        { new: true }
       );
-      return updated?.toObject();
+      
+      return updatedUser?.apiKeys || {};
     }),
 });

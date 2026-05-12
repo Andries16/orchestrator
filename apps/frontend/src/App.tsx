@@ -9,6 +9,9 @@ import { SettingsPage } from "./components/pages/SettingsPage";
 import { TemplatesPage } from "./components/pages/TemplatesPage";
 import { WorkflowEditorPage } from "./components/pages/WorkflowEditorPage";
 import { WorkflowExecutionPage } from "./components/pages/WorkflowExecutionPage";
+import { LoginPage } from "./components/pages/LoginPage";
+import { RegisterPage } from "./components/pages/RegisterPage";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 const ExecutionWrapper = () => {
   const { id } = useParams();
   return <WorkflowExecutionPage workflowId={id!} />;
@@ -37,15 +40,19 @@ export default function App() {
         }}
       />
       <Routes>
-        <Route path="/" element={<AgentsPage />} />
-        <Route path="/editor" element={<WorkflowEditorPage />} />
-        <Route path="/agent-editor" element={<AgentEditorPage />} />
-        <Route path="/execute/:id" element={<ExecutionWrapper />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/history/:id" element={<RunDetailsPage />} />
-        <Route path="/analytics" element={<AnalyticsPage />} />
-        <Route path="/templates" element={<TemplatesPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<AgentsPage />} />
+          <Route path="/editor" element={<WorkflowEditorPage />} />
+          <Route path="/agent-editor" element={<AgentEditorPage />} />
+          <Route path="/execute/:id" element={<ExecutionWrapper />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/history/:id" element={<RunDetailsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/templates" element={<TemplatesPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

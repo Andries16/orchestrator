@@ -1,30 +1,31 @@
 import { AgentSchema } from "@cross_brand/shared";
 import { z } from "zod";
 import { AgentModel } from "../models/Agent.js";
-import { publicProcedure, router } from "../trpc.js";
+import { protectedProcedure, router } from "../trpc.js";
+
 export const agentRouter = router({
-  getAll: publicProcedure.query(async () => {
-    return await AgentModel.find().sort({ createdAt: -1 });
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    return await AgentModel.find({ userId: ctx.user.id }).sort({ createdAt: -1 });
   }),
-  getById: publicProcedure.input(z.string()).query(async ({ input }) => {
-    const agent = await AgentModel.findById(input);
+  getById: protectedProcedure.input(z.string()).query(async ({ input, ctx }) => {
+    const agent = await AgentModel.findOne({ _id: input, userId: ctx.user.id });
     if (!agent) throw new Error("Agentul nu a fost găsit");
     return agent;
   }),
-  create: publicProcedure.input(AgentSchema).mutation(async ({ input }) => {
-    const newAgent = new AgentModel(input);
+  create: protectedProcedure.input(AgentSchema).mutation(async ({ input, ctx }) => {
+    const newAgent = new AgentModel({ ...input, userId: ctx.user.id });
     return await newAgent.save();
   }),
-  update: publicProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.string(),
         data: AgentSchema.partial(),
       }),
     )
-    .mutation(async ({ input }) => {
-      const updatedAgent = await AgentModel.findByIdAndUpdate(
-        input.id,
+    .mutation(async ({ input, ctx }) => {
+      const updatedAgent = await AgentModel.findOneAndUpdate(
+        { _id: input.id, userId: ctx.user.id },
         { $set: input.data },
         { new: true },
       );
@@ -32,8 +33,8 @@ export const agentRouter = router({
         throw new Error("Agentul nu a fost găsit pentru actualizare");
       return updatedAgent;
     }),
-  delete: publicProcedure.input(z.string()).mutation(async ({ input }) => {
-    const deletedAgent = await AgentModel.findByIdAndDelete(input);
+  delete: protectedProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
+    const deletedAgent = await AgentModel.findOneAndDelete({ _id: input, userId: ctx.user.id });
     if (!deletedAgent)
       throw new Error("Agentul nu a fost găsit pentru ștergere");
     return { success: true, id: input };

@@ -7,6 +7,7 @@ export interface IExecutionLog
   timestamp: Date;
 }
 const ExecutionLogSchema: Schema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   workflowId: { type: Schema.Types.ObjectId, ref: "Workflow", required: true },
   workflowRunId: {
     type: Schema.Types.ObjectId,

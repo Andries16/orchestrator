@@ -15,12 +15,19 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { trpc } from "../../utils/trpc";
+import { useAuthStore } from "../../utils/authStore";
+
 export const SettingsPage = () => {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
+  const updateUserKeys = useAuthStore((state) => state.updateUserKeys);
   const { data: settings } = trpc.settings.get.useQuery();
+  
   const updateMutation = trpc.settings.update.useMutation({
-    onSuccess: () => setShowSuccess(true),
+    onSuccess: (data) => {
+      updateUserKeys(data);
+      setShowSuccess(true);
+    },
   });
   const {
     register,

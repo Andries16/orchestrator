@@ -5,6 +5,9 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { connectDB } from "./db.js";
 import { appRouter } from "./routers/index.js";
+import { createContext } from "./trpc.js";
+import { verifyToken } from "./utils/auth.js";
+import { UserModel } from "./models/User.js";
 async function startServer() {
   await connectDB();
   const app = express();
@@ -22,7 +25,7 @@ async function startServer() {
     "/api/trpc",
     trpcExpress.createExpressMiddleware({
       router: appRouter,
-      createContext: () => ({}),
+      createContext,
     }),
   );
   app.get("/api/health", (req, res) => {
@@ -30,12 +33,27 @@ async function startServer() {
   });
   app.use(express.json());
   app.post("/api/execute-stream", limiter, async (req, res) => {
-    const { workflowId, initialInput, apiKeys } = req.body;
+    const { workflowId, initialInput } = req.body;
     if (!workflowId || !initialInput) {
       return res
         .status(400)
         .json({ error: "workflowId and initialInput are required" });
     }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    let user;
+    try {
+      const token = authHeader.split(" ")[1];
+      const decoded = verifyToken(token);
+      user = await UserModel.findById(decoded.userId);
+      if (!user) return res.status(401).json({ error: "User not found" });
+    } catch (err) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+    const apiKeys = user.apiKeys || {};
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
@@ -72,8 +90,23 @@ async function startServer() {
     }
   });
   app.post("/api/execute-resume", limiter, async (req, res) => {
-    const { runId, userInput, apiKeys } = req.body;
+    const { runId, userInput } = req.body;
     if (!runId) return res.status(400).json({ error: "runId is required" });
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    let user;
+    try {
+      const token = authHeader.split(" ")[1];
+      const decoded = verifyToken(token);
+      user = await UserModel.findById(decoded.userId);
+      if (!user) return res.status(401).json({ error: "User not found" });
+    } catch (err) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+    const apiKeys = user.apiKeys || {};
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");

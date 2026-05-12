@@ -5,6 +5,7 @@ export interface IWorkflowRun extends Omit<WorkflowRun, "startTime">, Document {
   state: Record<string, any>;
 }
 const WorkflowRunSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   workflowId: { type: Schema.Types.ObjectId, ref: "Workflow", required: true },
   status: {
     type: String,

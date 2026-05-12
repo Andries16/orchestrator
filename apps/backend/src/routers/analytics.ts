@@ -1,11 +1,12 @@
 import { ExecutionLogModel } from "../models/ExecutionLog.js";
 import { WorkflowRunModel } from "../models/WorkflowRun.js";
-import { publicProcedure, router } from "../trpc.js";
+import { protectedProcedure, router } from "../trpc.js";
+import mongoose from "mongoose";
 export const analyticsRouter = router({
-  getSummary: publicProcedure.query(async () => {
+  getSummary: protectedProcedure.query(async ({ ctx }) => {
     const [runs, logs] = await Promise.all([
-      WorkflowRunModel.find({}),
-      ExecutionLogModel.countDocuments({}),
+      WorkflowRunModel.find({ userId: ctx.user.id }),
+      ExecutionLogModel.countDocuments({ userId: ctx.user.id }),
     ]);
     const totalRuns = runs.length;
     const successRuns = runs.filter((r) => r.status === "completed").length;
@@ -30,11 +31,12 @@ export const analyticsRouter = router({
       totalAgentSteps: logs,
     };
   }),
-  getRunsOverTime: publicProcedure.query(async () => {
+  getRunsOverTime: protectedProcedure.query(async ({ ctx }) => {
     const since = new Date();
     since.setDate(since.getDate() - 30);
+    const userIdObj = new mongoose.Types.ObjectId(ctx.user.id);
     const result = await WorkflowRunModel.aggregate([
-      { $match: { startTime: { $gte: since } } },
+      { $match: { startTime: { $gte: since }, userId: userIdObj } },
       {
         $group: {
           _id: {
@@ -58,8 +60,10 @@ export const analyticsRouter = router({
       failed: r.failed,
     }));
   }),
-  getPerWorkflow: publicProcedure.query(async () => {
+  getPerWorkflow: protectedProcedure.query(async ({ ctx }) => {
+    const userIdObj = new mongoose.Types.ObjectId(ctx.user.id);
     const result = await WorkflowRunModel.aggregate([
+      { $match: { userId: userIdObj } },
       {
         $group: {
           _id: "$workflowId",
@@ -90,8 +94,10 @@ export const analyticsRouter = router({
         r.totalRuns > 0 ? Math.round((r.successRuns / r.totalRuns) * 100) : 0,
     }));
   }),
-  getPerAgent: publicProcedure.query(async () => {
+  getPerAgent: protectedProcedure.query(async ({ ctx }) => {
+    const userIdObj = new mongoose.Types.ObjectId(ctx.user.id);
     const result = await ExecutionLogModel.aggregate([
+      { $match: { userId: userIdObj } },
       {
         $group: {
           _id: "$agentId",
@@ -121,8 +127,10 @@ export const analyticsRouter = router({
       successCount: r.successCount,
     }));
   }),
-  getToolUsage: publicProcedure.query(async () => {
+  getToolUsage: protectedProcedure.query(async ({ ctx }) => {
+    const userIdObj = new mongoose.Types.ObjectId(ctx.user.id);
     const result = await ExecutionLogModel.aggregate([
+      { $match: { userId: userIdObj } },
       { $unwind: "$toolsUsed" },
       {
         $group: {

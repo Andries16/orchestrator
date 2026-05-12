@@ -33,7 +33,7 @@ export function topologicalSort(
 }
 export class OrchestratorService {
   constructor() {}
-  async runWorkflow(workflowId: string, initialInput: string) {
+  async runWorkflow(workflowId: string, initialInput: string, apiKeys?: any) {
     console.log(`[ORCHESTRATOR] Pornire workflow: ${workflowId}`);
     const workflow =
       await WorkflowModel.findById(workflowId).populate("steps.agentId");
@@ -67,6 +67,7 @@ export class OrchestratorService {
           model: agent.model,
           prompt: prompt,
           temperature: agent.temperature,
+          apiKeys,
         });
         const output = llmResult.text;
         const log = new ExecutionLogModel({
